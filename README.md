@@ -19,6 +19,8 @@ Notas importantes:
 - As semanas consistem de **6 dias (seg-sábado)**.
 - Um período de **duas semanas** (semanas flex) é flexibilizável para _reviews_, _feedbacks_ e remodelagens durante o projeto.
 
+---
+
 ### Fases de Desenvolvimento Cascata:
 
 - Analise de requisitos (1 semana).
@@ -62,43 +64,34 @@ Notas importantes:
 
 ### Analise do dominio
 
-- Para começarmos o desenvolvimento do projeto, será necessário dividir em pelo menos 2 frentes. A primeira no desenvolvimento do front-end e a segunda no desenvolvimento do back-end.
-
-* Front-End *
-  1 - Tela de login, com input de usuário e senha. Botão de para acessar e botão para recuperar a senha.
-    1.1 - Na opção de recuperar a senha, deverá ser enviado um e-mail para o e-mail vinculado a conta que está tentando acessar, solicitando a criação de uma nova senha.
-  2 - Página inicial, contendo opções de acesso à página de produtos, página de permissões do sistema e a página de logs.
-  3 - Para a página de logs, conterá uma tabela com todas as operações realizadas dentro do sistema (exceto consultas).
-  4 - Para a página de permissões, existirá uma tabela com todos os usuários que possuem permissões dentro do sistema, exibindo diferentes tipos de permissões, entre elas: Visualizar, Cadastrar, Alterar, Excluir e Administrador. Onde cada usuário poderá ter diversas combinações diferentes de permissões.
-  5 - Para a página de produtos, existirá uma tabela de todos os produtos contados no sistema, que só será exibida após a definição de pelo menos um parâmetro, para que não sobrecarregue a consulta no servidor. Existirá um botão para incluir um produto novo, que abrirá um modal na tela para informar os códigos, descrições e quantidades de acordo com a regra de negócio do cliente. Para editar um produto, será possível clicar em cima de um produto na lista e abrirá o mesmo modal com as informações atuais do banco. (Será necessário impedir que haja alguma movimentação em qualquer outro sistema aberto que possa modificar os dados do produto que se está fazendo a manutenção. Esse impedimento será realizado através de um sistema de semáforo). Também no modal de edição, existirá um botão para exclusão do produto, que só poderá ocorrer caso nenhuma requisição esteja em andamento.
-  6 - Existirá um 'checkbox' na linha de cada produto da tabela que ao ser selecionado, jogará as informações do produto dentro de um carrinho no sistema. Após o usuário selecionar todos os produtos que serão retirados do estoque. Ao clicar no botão 'Retirar' que estará junto dos produtos que serão retirados do estoque, ele abrirá mais um modal que você poderá colocar a quantidade a ser retirada do sistema (Desde que o produto não esteja sendo alterado em outro sistema e que haja quantidade suficiente). Após informado a quantidade e realizado a validação do semáforo, o sistema solicitará à API a retirada desses produtos do sistema.
-  7 - Existirá um botão para abastecer no canto superior esquerdo, onde você incluirá novas quantidades que serão somadas ao que já existe. Onde você clicará no botão para abastecer, ele aparecerá um modal para você pesquisar o produto que deseja abastecer, e mencionará a quantidade que será abastecida.
-
-* Back-End *
-  1 - O back-end seguirá o padrão de orientação a objetos, onde cada classe terá um correspondente ao banco de dados (Por exemplo: Produto, Permissão e Log)
-  2 - Permissão
-    2.1 - Haverá um endpoint que fará a validação do usuário e senha e retornará um token que poderá ser usado por até 24 horas dentro do sistema se caso a validação for sucesso. Esse token permanecerá armazenado na tabela de permissões no banco de dados.
-    2.1 - Haverá quatro endpoints para o sistema de usuários. Três endpoints com o método POST para cadastrar, alterar e excluir permissões e um endpoint com o método GET para consultar um ou mais permissões.
-  3 - Logs
-    3.1 - Haverá apenas um endpoint com o método GET para obter os logs de acordo com os parâmetros informados.
-  4 - Produtos
-    4.1 Para os produtos, haverão quatro endpoints possíveis. Três endpoints com o método POST para cadastrar, alterar e excluir produtos e um endpoint com o método GET para consultar um ou mais produtos.
-      4.1.1 O método alterar será utilizado tanto para ajustar uma quantidade, abastecer uma quantidade ou requisitar uma quantidade. O cadastro apenas para novos produtos e a exclusão para a exclusão de um produto.
-    4.2 Também existirá um endpoint com o método POST que funcionará como um semáforo e bloqueará a utilização do produto, alterando um parâmetro no cadastro do produto.
-
-  5 - No banco de dados, existirão um data base (db_estoque), e três tabelas (tb_permissao, tb_produto, tb_log), onde cada um deles possuirá uma chave primária para a manipulação de seus dados e tb_log possuirá a chave estrangeira de tb_produto. O restante das informações dependerá da regra de negócio do sistema definido pelo cliente.
+- Para começarmos o desenvolvimento do projeto, será necessário unificar as ideias da equipe, elaborar um plano de analise de requisitos e coletar os dados para garantir a precisão do desenvolvimento. 
+- Após a analise de requisitos, para o desenvolvimento será necessário dividir em pelo menos 2 frentes. A primeira no desenvolvimento do front-end e a segunda no desenvolvimento do back-end.
 
 #### Método de operação
 
-- Define a forma em que a operação de desenvolvimento vai ser gerênciada.
+- Scrum
 
-##### Problemas & Prioridades Encontrados 
+#### Critéria (problemas, prioridades etc) 
+
+##### Pedidos do cliente
+
+- Definem as condições, formato, tempo e qualidade que o cliente espera receber o produto.
+
+##### Necessidades do cliente
 
 - Definem os pontos críticos que o sistema devem conter, solucionar e/ou facilitar.
 
-#### Pedidos, Necessidades & Comentários do cliente (Critéria)
+##### Comentários do cliente 
 
-- Definem as condições, formato, tempo e qualidade que o cliente espera receber o produto.
+##### Limitações do cliente & produção
+
+- Lonely Node: Para simplicidade do projeto e diminuição de custos iniciais, é esperado que o sistema funcione em apenas uma máquina por vez.
+  - Wifi Only: Se possível, é esperado que o sistema evolua para funcionar em máquinas na rede local quando ativo.
+    - Internet Available: Se possível, é esperado que o sistema funcione 24h com acesso a internet. 
+
+---
+
+### Requisitos
 
 #### Regras de negócio
 
@@ -106,16 +99,270 @@ Notas importantes:
 - Definem regras que os desenvolvedores devem seguir.
 - Definem regras que componentes especificos do sistema devem seguir.
 
-#### Limitações do cliente
+> <br/>
+> 
+> ##### Quantidade 0
+>
+> Como há a possibilidade alta de entrada e saída de produtos previsiveis, é ideal que possa haver produtos com quantidade 0 para prevenir a reconfiguração de produtos. 
+> 
+> Para entender o problema, imagine o caso, "criei um produto X, todas as unidades acabaram, o produto foi removido, pedi um novo estoque, tive que criar X de novo e registrar o estoque novo".   
+>
+> ##### Permissões de Usuário
+>
+> Usuários podem ter diversas combinações diferentes de permissões.
+> As permissões disponíveis são:
+> - Cadastrar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
+> - Visualizar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
+> - Excluir ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
+> - Alterar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
+> 
+> ###### Cargos
+> O sistema deve conter cargos pré-definidos estaticamente. Cargos são conjuntos de permissões que facilitam o ato de adicionar multiplas permissões. 
+> Usuários podem ter diversos cargos como: 
+> - Administrador: Adiciona todas as permissões que existem no sistema.
+> >
+>
+> ##### Autorização de Usuário
+>
+> Uma sessão de usuário deve durar, no máximo, vinte e quatro horas.
+> 
+> <br/> 
+
+
+#### Requisitos de UI
+
+<b>
+Interface
+</b>
+
+> <br/>
+>
+> <ol id="front-end">
+>   <li>Sistema de Autenticação &amp; Autorização</li>
+>   <li id="sistema-de-carrinho-de-produto">Sistema de Carrinho de Produtos</li>
+>   <li>Sistema de Criptografia de Dados</li>
+> </ol>
+>
+> <br/>
+
+<br/>
+
+<ol id="interface-de-login">
+  <li>Interface de login
+    <ol>
+      <li>Campos de inserção para nome de usuário e senha. 
+        <ol>
+          <li><del>Botão de para acessar e botão para recuperar a senha.</del> (Nota 1) 
+            <ol>
+              <li><del>Deverá ser enviado um e-mail para o e-mail vinculado a conta que está tentando acessar, solicitando a criação de uma nova senha.</del></li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li id="interface-base">Interface base
+    <ol>
+      <li>Acesso a <a href="#interface-de-logs">Interface de Logs</a></li>
+      <li>Acesso a <a href="#interface-de-produtos">Interface de Produtos</a></li>
+      <li>Acesso a <a href="#interface-permissões">Interface de Permissões do Sistema</a></li>
+    </ol>
+  </li>
+  <li id="interface-de-logs">Interface de logs
+    <ol>
+      <li>Tabela com todas as operações realizadas <code>(Missing Documentation: Lista das operações disponíveis)</code> dentro do sistema (exceto consultas <code>(Missing Documentation: Caracterização da consulta)</code>).</li>
+    </ol>
+  </li>
+  <li id="interface-permissões">Interface permissões
+    <ol>
+      <li>Tabela com todos os usuários que possuem permissões dentro do sistema.
+        <ol>
+          <li>Exibir os diferentes [Tipos de Permissões](#permissões-de-usuário) que o usuário contém.</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li id="interface-de-produtos">Interface de produtos
+    <ol>
+      <li>Tabela com os produtos contados no sistema.
+        <ol>
+          <li>Contém um limite de exibição de produtos (50) <code>(Interface Behavior)</code></li>
+          <li>Botão para incluir um produto novo
+            <ol>
+              <li>Abre um _Modal_ na tela para informar os [Dados do Produto](#produto).</li>
+              <li>Desabilitado se mais de um item estiver no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>. <code>(Interface Behavior)</code></li>
+            </ol>
+          </li>
+          <li>Linha de Produto (Elemento Gráfico)
+            <ol>
+              <li>Deve mostrar os [Dados do Produto](#produto) mais importantes. <code>(Missing Documentation: Especificação de Dados)</code></li>
+              <li>Clicar em uma linha de produto abrirá um _Modal_ com a maioria dos dados atuais do banco. <code>(Missing Documentation: Especificação de Dados)</code>
+                <ol>
+                  <li><del>Para evitar casos de múltiplos usuários modificando dados ao mesmo tempo, será necessário impedir que haja várias mutações (delete, update, put) ao mesmo tempo.</del> (Nota 1)</li>
+                </ol>
+              </li>
+              <li>_Checkbox_ (Elemento Gráfico) 
+                <ol>
+                  <li>Ao ser clicado, passa as informações do produto para o <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produtos</a> do sistema.</li>
+                  <li>Após informado a quantidade e realizado a validação do semáforo, o sistema solicitará à API a retirada desses produtos do sistema. <code>(Interface Behavior)</code></li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>Deve conter um botão para atualização da maioria dos [Dados do Produto](#produto) <code>(Interface Behavior)</code> <code>(Missing Documentation: Especificação de Dados)</code>
+        <ol>
+          <li>Ao clicar no botão, ele abrirá o _Modal_ de atualização. <code>(Interface Behavior)</code></li>
+          <li>_Modal_ de atualização
+            <ol>
+              <li>Caixa de entrada para quantidade de produto (a ser abastecida no sistema), que será limitada a quantidade do produto com menor quantidade no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
+              <li>Caixa de entrada para nome do produto (a ser atualizado), apenas se houver 1 produto no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
+              <li>Botão de Confirmação.
+                <ol>
+                  <li>Atualiza todos os itens no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>Deve conter um botão para exclusão do produto <code>(Interface Behavior)</code>  
+        <ol>
+          <li>Ao clicar no botão, ele abrirá o _Modal_ de exclusão. <code>(Interface Behavior)</code></li>
+          <li>_Modal_ de exclusão
+            <ol>
+              <li>Caixa de entrada para quantidade de produto (a ser retirada do sistema), que será limitada a quantidade do produto com menor quantidade no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
+              <li>Botão de Confirmação.
+                <ol>
+                  <li>Exclui todos os itens no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+### Back End
+
+  1.  Sistema de Autenticação e Autorização (com Sessões)
+      1.  Deve remover a sessão do usuário que fique autorizado por intervalo maior do que o definido em [Duração da Autorização](#autorização-de-usuário)
+      2.  Deve armazenar os [Dados de Sessão](#sessão)
+      3.  Deve receber os [Dados de Autenticação](#dados-de-login) e criar uma sessão caso reflitam as credenciais de um usuário existente. 
+      4.  Deve disponibilizar uma interface funcional para criar sessão, terminar sessão, adicionar permissões ao usuário, criar usuário, deletar usuário e modificar usuário (remover permissões, adicionar permissões, modificar o nome, senha etc). ```(Missing Documentation: Especificação de Funcionalidade)```
+  2. Logs
+      1.  Deve disponibilizar uma interface funcional para obter os [Logs Coletados pelo Sistema](#dados-de-logs) de acordo com os parâmetros informados. ```(Missing Documentation: Especificação de Parametros)```
+  3. Produtos
+     1.  Para os produtos, deverá haver um sistema de gerenciamento.
+         1. Mecanismo de cadastro de produtos.
+            1. Deve ser capaz de receber parametros que identifiquem os produtos alvo.
+         2. Mecanismo de exclusão de produtos. 
+            1. Deve ser capaz de receber parametros que identifiquem os produtos alvo.
+         3. Mecanismo de alteração de produtos.
+            1. Deve ser capaz de receber parametros que identifiquem os produtos alvo.
+            2. Deve disponibilizar ajuste de quantidade, incremento (abastecimento) de quantidade ou remoção de uma quantidade. 
+         4. Mecanismo de consultar de produtos.
+            1. Deve ser capaz de receber parametros que identifiquem os produtos alvo.
+
+---
 
 ### Produção
 
-A ser feito.
+#### Mapa de Requisitos Técnicos
 
-#### Mapa de Requisitos Técnico
+> <br/>
+> 
+> ### Back End
+>
+> - Banco de Dados: 
+> - Paradigma: Orientado a Objectos
+> - Linguagem:
+>
+> Comportamento: Active Record / Data Mapper (cada classe tem um semelhante no banco de dados) 
+>
+> <br/>
 
-A ser feito.
+<br>
+
+> <br/>
+>
+> ### Dados Temporários (Sistema)
+> 
+> ###### Carrinho de Produto
+>
+> ```(Missing Documentation: Dados)```
+> 
+> ###### Sessão
+>
+> ```(Missing Documentation: Dados)```
+>
+> ###### Produto
+>
+> Para a criação, deverá conter os seguintes dados:
+> - Quantidade: ```(Missing Documentation: Significado)``` 
+> - Descrição: ```(Missing Documentation: Significado)``` 
+> - Código: ```(Missing Documentation: Significado)``` 
+>
+> ###### Dados de Login
+>
+> ```(Missing Documentation: Dados)```
+>
+> ### Dados (Banco de Dados)
+>
+> Dados frutos das necessidades do cliente, de operação do sistema e de interface gráfica.
+>
+> ###### Produto (Tabela _estoque_)
+> Ao ser inserido no banco de dados, contém os seguintes dados:
+> - Ultimo Modificador: ```(Missing Documentation: Significado)```
+> - Ultima Modificação: ```(Missing Documentation: Significado)```
+> - Data de Criação: ```(Missing Documentation: Significado)```
+>
+> ###### Permissões (Tabela _permissoes_)
+>
+> ```(Missing Documentation: Dados)```
+> 
+> ###### Usuário (Tabela _usuario_)
+>
+> Dados credenciais:
+> - Nome: ```(Missing Documentation: Significado)```
+> - Senha: ```(Missing Documentation: Significado)```
+> 
+> ### Dados de Logs (Banco de Dados)
+>
+> ###### Logs (Tabela _logs_)
+>
+>  ```(Missing Documentation: Dados)```
+>
+> <br/>
 
 #### Responsabilidades
 
-A ser feito.
+Documentação.
+- Lead: André
+- Auxiliar & Elaborator: Eduardo
+- Auxiliar & Elaborator: Murilo 
+- Elaborator: Elian
+
+Visita Técnica & Intermediação (Feedbacks, Propostas etc).
+- Lead: Elian
+- Participant: André
+
+
+## Proximas Etapas
+
+1. Visita Técnica
+2. Converter as informações da visita para requisitos
+3. Definir o visual dos elementos em [Requisitos de Interface Gráfica](#requisitos-de-ui).
+4. Definir uma stack de desenvolvimento para _frontend_ e _backend_.
+
+## Notas
+
+Nota 1: 
+O meio atual de resolução para este elemento da interface e comportamento não pode ser construído sem ferir as regras os limites do desenvolvimento ou apresentam problemas que não são necessários resolver devido a estrutura atual do sistema. 
+<br/>
+[De acordo com limitações do projeto](#limitações-do-cliente--produção), é esperado que o sistema funcione sem a necessidade de um servidor conectado a rede external (apenas wifi). 
+<br/>
+Por causa disso, esse elemento da interface e comportamento serão descartados até a apresentação de uma solução compatível com o sistema.
