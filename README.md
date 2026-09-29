@@ -139,6 +139,11 @@ Interface
 >
 > <ol id="front-end">
 >   <li>Sistema de Autenticação &amp; Autorização</li>
+>   <li>Sistema de Visualização de Produtos</li>
+>   <li>Sistema de Adição de Produtos</li>
+>   <li>Sistema de Remoção de Produtos</li>
+>   <li>Sistema de Atualização de Produtos</li>
+>   <li>Sistema de Pedidos</li>
 >   <li id="sistema-de-carrinho-de-produto">Sistema de Carrinho de Produtos</li>
 >   <li>Sistema de Criptografia de Dados</li>
 > </ol>
@@ -186,22 +191,33 @@ Interface
     <ol>
       <li>Tabela com os produtos contados no sistema.
         <ol>
+          <li>Barra de navegação por nome
+            <ol>
+              <li>Deve ignorar espaços, hífens e pontos.</li>
+              <li>Deve conter tratamento de texto
+                <ol>
+                  <li>Se digitar 0445110318 ou 0-445-110-318, o sistema deve encontrar a mesma peça.</li>
+                  <li>Perdoar erros de digitação comuns (ex: buscar "Bosh" e o sistema entender "Bosch")</li>
+                </ol>
+              </li>  
+            </ol>
+          </li>
           <li>Contém um limite de exibição de produtos (50) <code>(Interface Behavior)</code></li>
           <li>Botão para incluir um produto novo
             <ol>
-              <li>Abre um _Modal_ na tela para informar os [Dados do Produto](#produto).</li>
+              <li>Abre um <i>Modal</i> na tela para informar os [Dados do Produto](#produto).</li>
               <li>Desabilitado se mais de um item estiver no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>. <code>(Interface Behavior)</code></li>
             </ol>
           </li>
           <li>Linha de Produto (Elemento Gráfico)
             <ol>
               <li>Deve mostrar os [Dados do Produto](#produto) mais importantes. <code>(Missing Documentation: Especificação de Dados)</code></li>
-              <li>Clicar em uma linha de produto abrirá um _Modal_ com a maioria dos dados atuais do banco. <code>(Missing Documentation: Especificação de Dados)</code>
+              <li>Clicar em uma linha de produto abrirá um <i>Modal</i> com a maioria dos dados atuais do banco. <code>(Missing Documentation: Especificação de Dados)</code>
                 <ol>
                   <li><del>Para evitar casos de múltiplos usuários modificando dados ao mesmo tempo, será necessário impedir que haja várias mutações (delete, update, put) ao mesmo tempo.</del> (Nota 1)</li>
                 </ol>
               </li>
-              <li>_Checkbox_ (Elemento Gráfico) 
+              <li><i>CheckBox</i> (Elemento Gráfico) 
                 <ol>
                   <li>Ao ser clicado, passa as informações do produto para o <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produtos</a> do sistema.</li>
                   <li>Após informado a quantidade e realizado a validação do semáforo, o sistema solicitará à API a retirada desses produtos do sistema. <code>(Interface Behavior)</code></li>
@@ -213,12 +229,12 @@ Interface
       </li>
       <li>Deve conter um botão para atualização da maioria dos [Dados do Produto](#produto) <code>(Interface Behavior)</code> <code>(Missing Documentation: Especificação de Dados)</code>
         <ol>
-          <li>Ao clicar no botão, ele abrirá o _Modal_ de atualização. <code>(Interface Behavior)</code></li>
-          <li>_Modal_ de atualização
+          <li>Ao clicar no botão, ele abrirá o <i>Modal</i> de atualização. <code>(Interface Behavior)</code></li>
+          <li><i>Modal</i> de atualização
             <ol>
               <li>Caixa de entrada para quantidade de produto (a ser abastecida no sistema), que será limitada a quantidade do produto com menor quantidade no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
               <li>Caixa de entrada para nome do produto (a ser atualizado), apenas se houver 1 produto no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
-              <li>Botão de Confirmação.
+              <li>Botão de Confirmação. <code>UI Interruptiva</code>
                 <ol>
                   <li>Atualiza todos os itens no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
                 </ol>
@@ -227,13 +243,13 @@ Interface
           </li>
         </ol>
       </li>
-      <li>Deve conter um botão para exclusão do produto <code>(Interface Behavior)</code>  
+      <li>Deve conter um botão para baixa do produto <code>(Interface Behavior)</code>  
         <ol>
-          <li>Ao clicar no botão, ele abrirá o _Modal_ de exclusão. <code>(Interface Behavior)</code></li>
-          <li>_Modal_ de exclusão
+          <li>Ao clicar no botão, ele abrirá o <i>Modal</i> de baixa. <code>(Interface Behavior)</code></li>
+          <li> <i>Modal</i> de baixa
             <ol>
               <li>Caixa de entrada para quantidade de produto (a ser retirada do sistema), que será limitada a quantidade do produto com menor quantidade no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
-              <li>Botão de Confirmação.
+              <li>Botão de Confirmação. <code>UI Interruptiva</code>
                 <ol>
                   <li>Exclui todos os itens no <a href="#sistema-de-carrinho-de-produto">Sistema de Carrinho de Produto</a>.</li>
                 </ol>
@@ -246,7 +262,32 @@ Interface
   </li>
 </ol>
 
+**Gerais**
+
+- ```Avisos Não-Interruptivos```: Mensagens (e modais) de sucesso não devem fazer com que o usuário necessite de confirmação para fechar. Elas devem aparecer como pequenos alertas temporários no canto da tela (_toast notifications_) para não quebrar o ritmo de trabalho. 
+- ```Avisos Interruptivos```: Mensagens de erro crítico (ex: "Estoque insuficiente para esta Ordem de Serviço") exigem ação e travam a tela.
+
+**Extras** (Prioridade decrescente).
+
+- ```Conjuntos```: O sistema deve permitir o cadastro de um "Produto Composto", nesse caso, um conjunto.
+  - Conjuntos podem ser utilizados para dar saída em multiplos produtos ao mesmo tempo, o sistema desconta automaticamente do inventário todos os subcomponentes vinculados a ele.
+  - Conjuntos podem ser utilizados para dar entrada em multiplos produtos ao mesmo tempo, o sistema incrementa automaticamente do inventário todos os subcomponentes vinculados a ele.
+  - **Justificativa**: Para consertar uma Bomba Injetora VE, o bombista não pede ao almoxarifado 1 mola, 3 anéis e 1 eixo separadamente. Ele pede o "Kit de Reparo da Bomba VE".
+  - Conjuntos podem ser utilizados para ver o status de multiplos produtos ao mesmo tempo, o sistema mostra automaticamente o que falta e existe no inventário para todos os subcomponentes vinculados a ele.
+  - **Justificativa**: Aumenta a velocidade de visualização e operação geral.
+  - **Contras**: Pode acabar sendo inutil a medida que a incidencia da necessidade de produtos em conjuntos não está presente na mecanica. Por exemplo, caso todo pedido necessidade de produtos bastantes diferentes.
+    - Entrentanto, pode funcionar para os casos de clientes que vem para refazer o mesmo pedido entre outros. Deve-se analisar o fluxo de caixa real para decidir se isso é necessário.
+- ```Rastreabilidade Automática```: Toda ação de criação, mutação ou exclusão precisa registrar o usuário, a data e a hora onde foi feita. 
+<del>O sistema não deleta itens do banco de dados, ele apenas os inativa ou oculta, preservando o histórico.</del> (Nota 2)
+  - ```Registro Temporário```: O sistema inativa temporáriamente os dados, se eles não forem recuperados pelo usuário em 30 dias, eles serão deletados.
+  - ```Ignorar Dados Desativados```: O código interno deve ignorar dados marcados como desativados nas listagens para visualização a não ser que especificado.
+- ```Tipografia Ampliada```: Códigos de peças automotivas costumam ser longos e alfanuméricos (ex: 0 445 110 318). Eles precisam ser renderizados em fontes monoespaçadas (onde toda letra tem a mesma largura) para evitar erros de leitura.
+- ```Registro de Clientes```: Registrar clientes (nome, telefone etc) para guardar informações de quais peças cada cliente usou através de uma relação entre Produto x Cliente. 
+- ```Equivalência de Produtos```: O produto pode conter um campo "Tipo Equivalente". Quando a busca por uma peça alvo falha, o sistema exibe imediatamente uma sugestão alternativa por equivalencia: "Saldo indisponível. Deseja utilizar o item equivalente X, que possui Y unidades em estoque?".
+  - **Contras**: Custa **tempo notável** e **aumenta bastante a complexidade** do sistema de produtos, principalmente por conter uma série de relações, condições e possibilidades indiretas a serem elaboradas.
+
 ### Back End
+
 
   1.  Sistema de Autenticação e Autorização (com Sessões)
       1.  Deve remover a sessão do usuário que fique autorizado por intervalo maior do que o definido em [Duração da Autorização](#autorização-de-usuário)
@@ -268,6 +309,46 @@ Interface
             1. Deve ser capaz de receber parametros que identifiquem os produtos alvo.
 
 ---
+### Histórico de Atualizações com o Cliente
+
+---
+
+**Primeira Visita Técnica**
+#### Dúvidas
+
+```Modo Escuro ou Claro por Padrão```
+
+
+**Justificativa**
+Em oficinas, telas muito claras podem cansar a vista e evidenciar marcas de dedos e sujeira no monitor. Para aumentar a velocidade do processo de desenvolvimento, é esperado fazer apenas um dos dois para o produto inicial, por isso, a escolha do estilo de cores é essencial.
+
+- Paletas de cores com fundo escuro e fontes de alto contraste devem melhorar a visibilidade à distância.
+- Muito constrante pode acabar sendo prejudicial. 
+- Paletas de cores baseadas em preto são mais dificeis de navegar. 
+
+```Especificidade```
+
+**Justificativa**
+Existem peças de alto valor agregado (ex: Módulos Eletrônicos ECM) que exigem o registro do Número de Série individual de cada peça que entra e sai. Já outras o controle é apenas por quantidade (ex: temos 5 unidades, não importa o número de série delas).
+
+```Funcionamento dos pedidos e armazenamento```
+
+Deve-se considerar perguntar sobre o fluxo na qual os pedidos acontecem. Dando enfoque a forma em que são recebidos e também como são armazenados: com que dados, se são etiquetados, o que entra e sai mais.
+
+```Pontos mais recorrentes ou necessários```
+
+Deve-se considerar questionar o que mais acontece em relação ao estoque que atrasa os funcionários (tempo de procura, notificar baixa para outros funcionários, ter que checar precificação no site etc).
+
+_Provavelmente registros de eventos, dados de estoque e descrições de eventos_
+
+```Terminais```
+
+Verificar quantos terminais são utilizados no local, isso pode definir a complexidade e disponibilidade do sistema (se pode ser feita para apenas um computador ou deve ser em rede).
+
+****
+#### Feedback Recebido
+
+---
 
 ### Produção
 
@@ -277,9 +358,10 @@ Interface
 > 
 > ### Back End
 >
-> - Banco de Dados: 
-> - Paradigma: Orientado a Objectos
-> - Linguagem:
+> - Banco de Dados: Provavelmente Local, em memoria com salvamento em JSON. 
+> - Paradigma: Orientado a Objetos.
+> - Linguagem: Python.
+> - Framework: PyQt.
 >
 > Comportamento: Active Record / Data Mapper (cada classe tem um semelhante no banco de dados) 
 >
@@ -305,6 +387,9 @@ Interface
 > - Quantidade: ```(Missing Documentation: Significado)``` 
 > - Descrição: ```(Missing Documentation: Significado)``` 
 > - Código: ```(Missing Documentation: Significado)``` 
+> - Origem: String (Local onde foi comprado, nome do cliente que devolveu a peça etc)
+> - Usado: Booleano (Define se a peça é nova ou reusada)
+> - Destino: String (Paradeiro do produto)
 >
 > ###### Dados de Login
 >
@@ -366,3 +451,8 @@ O meio atual de resolução para este elemento da interface e comportamento não
 [De acordo com limitações do projeto](#limitações-do-cliente--produção), é esperado que o sistema funcione sem a necessidade de um servidor conectado a rede external (apenas wifi). 
 <br/>
 Por causa disso, esse elemento da interface e comportamento serão descartados até a apresentação de uma solução compatível com o sistema.
+
+Nota 2: 
+Itens deletados **devem** ser deletados, para não criar um caso de armazenamento de crescimento infinito. Entretanto, registros pequenos das ações podem mantidas indefinidamente.
+
+É importante considerar que esta proposta aumenta o tempo de produção do MVP significativamente.
