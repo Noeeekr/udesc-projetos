@@ -107,25 +107,21 @@ Notas importantes:
 > 
 > Para entender o problema, imagine o caso, "criei um produto X, todas as unidades acabaram, o produto foi removido, pedi um novo estoque, tive que criar X de novo e registrar o estoque novo".   
 >
-> ##### Permissões de Usuário
+> ##### Movimentação em Massa do Estoque
 >
-> Usuários podem ter diversas combinações diferentes de permissões.
-> As permissões disponíveis são:
-> - Cadastrar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
-> - Visualizar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
-> - Excluir ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
-> - Alterar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
-> 
-> ###### Cargos
-> O sistema deve conter cargos pré-definidos estaticamente. Cargos são conjuntos de permissões que facilitam o ato de adicionar multiplas permissões. 
-> Usuários podem ter diversos cargos como: 
-> - Administrador: Adiciona todas as permissões que existem no sistema.
-> >
+> De acordo com a analise do colaborador _Elian_, o sistema deve considerar eventos de movimentação em massa, pois em primeiro caso de uso, grandes volumes de estoque terão de ser registrados. Isso serve para garantir a velocidade de registro em eventuais casos de mudanças de estoque (loja 1 para loja 2) ou remoções em larga escala (vendas em lotes).
 >
-> ##### Autorização de Usuário
+> Ao considerar esses eventos, o sistema deve permitir, no mínimo, criações e baixas em lotes. Nesse caso, ao criar/remover 10 produtos diferentes uma vez sem ter eventos de interrupção no processo, com possíveis keybinds facilitadoras ou sistema simplificado.
 >
-> Uma sessão de usuário deve durar, no máximo, vinte e quatro horas.
-> 
+> ##### Etiquetas
+>
+> O sistema deve permitir que um produto tenha etiquetas, que permitem definir a localização do produto no estoque físico. Um produto pode ter mais de uma etiqueta, por exemplo, etiqueta A (prateleira 5) etiqueta B (quinta linha da prateleira) para facilitar a alteração depois.
+>
+> ##### Localização preemptiva
+>
+> O sistema deve permitir filtrar produtos por nome e manter correspondencias por nome como prioridade de visualização. Junto a isso, deve ser capaz de filtrar por outros dados, como descrição, etiqueta etc. Nesse caso, o sistema deve mostrar eles ranqueados da seguinte forma: todos com correspondencia de nome (maior correspondencia primeiro), todos com correspondencia de descrição (maior correspondecia primeiro) e depois por etiqueta. 
+>
+>
 > <br/> 
 
 
@@ -285,9 +281,19 @@ Interface
 - ```Registro de Clientes```: Registrar clientes (nome, telefone etc) para guardar informações de quais peças cada cliente usou através de uma relação entre Produto x Cliente. 
 - ```Equivalência de Produtos```: O produto pode conter um campo "Tipo Equivalente". Quando a busca por uma peça alvo falha, o sistema exibe imediatamente uma sugestão alternativa por equivalencia: "Saldo indisponível. Deseja utilizar o item equivalente X, que possui Y unidades em estoque?".
   - **Contras**: Custa **tempo notável** e **aumenta bastante a complexidade** do sistema de produtos, principalmente por conter uma série de relações, condições e possibilidades indiretas a serem elaboradas.
+ ##### Permissões de Usuário (Extra)
+
+- ```Permissões```: Usuários podem ter diversas combinações diferentes de permissões.
+ - Cadastrar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
+ - Visualizar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
+ - Excluir ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
+ - Alterar ```(Missing Documentation:  Comportamento habilitado)``` ```(Missing Documentation: Recurso Afetado)```
+- ```Cargos```: O sistema deve conter cargos pré-definidos estaticamente. Cargos são conjuntos de permissões que facilitam o ato de adicionar multiplas permissões. 
+  - Administrador: Adiciona todas as permissões que existem no sistema.
+- ```Autorização de Usuário```
+  - Uma sessão de usuário deve durar, no máximo, vinte e quatro horas.
 
 ### Back End
-
 
   1.  Sistema de Autenticação e Autorização (com Sessões)
       1.  Deve remover a sessão do usuário que fique autorizado por intervalo maior do que o definido em [Duração da Autorização](#autorização-de-usuário)
@@ -381,6 +387,13 @@ Verificar quantos terminais são utilizados no local, isso pode definir a comple
 >
 > ```(Missing Documentation: Dados)```
 >
+> ###### Etiquetas de Produto (Dados de localização)
+>
+> Para a criação, deverá conter os seguintes dados:
+> - Produto: Referencia (O produto a qual a etiqueta se refere)
+> - Nome: String (O nome/apelido da etiqueta)
+> - Descrição: String (A descrição de onde o produto está)
+>
 > ###### Produto
 >
 > Para a criação, deverá conter os seguintes dados:
@@ -453,6 +466,6 @@ O meio atual de resolução para este elemento da interface e comportamento não
 Por causa disso, esse elemento da interface e comportamento serão descartados até a apresentação de uma solução compatível com o sistema.
 
 Nota 2: 
-Itens deletados **devem** ser deletados, para não criar um caso de armazenamento de crescimento infinito. Entretanto, registros pequenos das ações podem mantidas indefinidamente.
+Itens deletados **devem** ser deletados, para não criar um caso de armazenamento de crescimento infinito. Entretanto, registros pequenos das ações podem mantidas indefinidamente. Além disso, há o caso [Quantidade Zero](#quantidade-0)
 
 É importante considerar que esta proposta aumenta o tempo de produção do MVP significativamente.
