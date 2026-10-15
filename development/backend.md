@@ -101,9 +101,9 @@
 > ###### Produto
 >
 > Para a criação, deverá conter os seguintes dados:
-> - Quantidade: ```(Missing Documentation: Significado)``` 
-> - Descrição: ```(Missing Documentation: Significado)``` 
-> - Código: ```(Missing Documentation: Significado)``` 
+> - Quantidade: Inteiro (Quantidade mais recente do produto em estoque)
+> - Descrição: String (Descrição leve do produto)
+> - Código: String (Código único do produto no estoque) 
 > - Origem: String (Local onde foi comprado, nome do cliente que devolveu a peça etc)
 > - Usado: Booleano (Define se a peça é nova ou reusada)
 > - Destino: String (Paradeiro do produto)
@@ -114,9 +114,9 @@
 >
 > ###### Produto (Tabela _estoque_)
 > Ao ser inserido no banco de dados, contém os seguintes dados:
-> - Ultimo Modificador: ```(Missing Documentation: Significado)```
-> - Ultima Modificação: ```(Missing Documentation: Significado)```
-> - Data de Criação: ```(Missing Documentation: Significado)```
+> - Ultimo Modificador: Nome (Ultimo usuário a modificar a log)
+> - Ultima Modificação: Data (Momento em que a log foi alterada pela ultima vez)
+> - Data de Criação: Data (Momento em que a log foi registrada)
 >
 > ###### Usuário (Tabela _usuario_)
 >
