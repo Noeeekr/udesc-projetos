@@ -1,4 +1,19 @@
-## Desenvolvimento do Produto
+# Desenvolvimento da Interface do Sistema
+
+## Introdução
+
+A interface de usuário do sistema é uma parte bastante ambiciosa do sistema, pois define um dos principais críterios de aceitação do mesmo: a simplicidade e facilidade. 
+
+A interface do sistema contém 3 principais pontos: Estoque, registro e pedidos. Ambos servindo a um propósito observado no fluxo de tarefas do cliente final. 
+
+### Estoque
+O sistema de estoque é o ponto chave, ele contém os dados principais do sistema: os produtos disponíveis, o foco dessa parte da interface é a clareza e visibilidade dos dados, navegação rápida e inserção/atualização fácil. 
+
+### Pedidos
+Além disso, o sistema contém uma seção de pedidos, esta seção lida com os produtos que ainda não estão disponíveis no estoque, como pedidos feitos que ainda não chegaram, remoções programadas e pedidos "pre-demanda", aonde o estoque já deixa um pedido pronto a ser feito para quando ele for, de fato, necessário. 
+
+### Registro
+Por fim, o sistema também contém uma seção de registros, que oferece noções essenciais sobre quais operações foram feitas no estoque, dando _Insight_ sobre quem fez o quê e quando cada coisa foi feita.
 
 #### Ferramentas Necessárias
 
@@ -15,6 +30,8 @@
 
 ---
 #### Estilo Visual
+
+Para mais informações sobre os modelos visuais, acesse [Modelos da Interface Gráfica](../assets/README.md)
 
 ---
 #### Requisitos da UI

@@ -37,7 +37,9 @@ Notas importantes:
     - Review (1 dia, na sexta-feira).
     - Alterações (1 dia, no sábado).
 - Desenvolvimento (2 semanas).
-  - Para as etápas do desenvolvimento [clique aqui](#desenvolvimento)
+  - Para as regras do desenvolvimento [Cheque a Definição de Domínio](./development/domain.md)
+  - Para o desenvolvimento de UI [Cheque a Interface Visual](./development/frontend.md)
+  - Para o desenvolvimento do sistema interno [Cheque o Sistema Interno](./development/backend.md)
 - Apresentação do projeto (1 semana).
   - Desenvolvimento do roteiro de apresentação (2 dias).
   - Desenvolvimento da apresentação como slides, vídeo etc (2 dias).
@@ -59,3 +61,9 @@ Notas importantes:
 ## Sobre as responsabilidades
 
 É esperado que, durante o projeto, todo dia haja ao menos 1 (uma) pessoa investindo no projeto. Para que não fique maçante, a divisão de tarefas deve dispersar as atividades entre os colaboradores com vista na separação entre o tempo de execução. Cada dia uma pessoa diferente assume o procedimento de uma fase, garantindo 1 atividade a cada 5~ dias para cada.
+
+## Informações de Execução do Projeto
+
+Informações sobre datas, responsabilidades e outros podem ser encontradas em [Arquivo de Registro](./registry.md).
+
+Informações sobre entrevistas com o cliente, _Feedback_ e notas adicionais podem ser encontradas na [Seção de Entrevistas](./interviews.md).

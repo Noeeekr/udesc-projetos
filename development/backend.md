@@ -1,6 +1,10 @@
-# Desenvolvimento do Produto
+# Desenvolvimento do Sistema Interno
 
 ## Introdução
+
+O sistema interno do estoque contém uma série de qualidade, a principal delas é abstrair a responsabilidade de gestão de uma série de regras de negócio relacionadas a gestão de dados e noção das ferramentas necessárias para isso. O foco desse sistema é garantir uma API que permita executar todas as necessidades funcionais do sistema por código.
+
+O sistema interno contém um modulo de produtos, aonde é possivel ver, adicionar, remover e alterar produtos. Além disso, o sistema também contém um modulo de registro que guarda as informações de alteração, adição e remoção no estoque. Por fim, ele também contém um sistema de segurança básico que criptográfa os dados além de permitir acesso apenas a usuário qualificados.
 
 ### Mapa de requisitos
 
